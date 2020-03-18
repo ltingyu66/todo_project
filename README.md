@@ -1,4 +1,4 @@
-# A TODO project - using Maven, Spring MVC, Hibernate and Docker 
+# todo_project - using Maven, Spring MVC, Hibernate and Docker 
 
 This project helps someone get familiar with those technologies.
 
@@ -20,7 +20,6 @@ Give examples
 
 N.A.
 Say what the step will be
-
 End with an example of getting some data out of the system or using it for a little demo
 
 ## Running the tests
