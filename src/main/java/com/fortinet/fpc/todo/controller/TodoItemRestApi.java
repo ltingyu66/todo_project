@@ -55,7 +55,7 @@ public class TodoItemRestApi {
         TodoItem tempTodoItem  = todoItemService.getTodoItem(todoItemId);
 
         if (tempTodoItem == null) {
-            throw new TodoItemNotFpundException("Customer id not found - " + todoItemId);
+            throw new TodoItemNotFpundException("TodoItem id not found - " + todoItemId);
         }
 
         todoItemService.deleteTodoItem(todoItemId);
