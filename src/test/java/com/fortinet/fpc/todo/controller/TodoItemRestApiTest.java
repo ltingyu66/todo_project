@@ -54,11 +54,11 @@ public class TodoItemRestApiTest {
     private TodoItemRestApi todoItemRestApi = new TodoItemRestApi();
 
 
-    List<TodoItem> todoItems;
-    TodoItem todoItem;
-    TodoItem todoItem2;
-    Status status;
-    int wrongId = 50;
+    private List<TodoItem> todoItems;
+    private TodoItem todoItem;
+    private TodoItem todoItem2;
+    private Status status;
+    private int wrongId = 50;
 
     TodoItemNotFpundException notFpundException;
 

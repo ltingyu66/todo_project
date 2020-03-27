@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+          http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+          http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
+
+    <context:annotation-config/>
+    <context:component-scan base-package="org.skyscreamer.yoga.demo.test.controller"/>
+    <context:component-scan base-package="org.skyscreamer.yoga.springmvc.controller"/>
+
+    <bean name="handlerAdapter" class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
+
+    <!--  <mvc:annotation-driven />  -->
+    <bean name="viewResolver" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver"
+          p:order="1" p:ignoreAcceptHeader="true">
+        <property name="mediaTypes">
+            <map>
+                <entry key="json" value="application/json"/>
+                <entry key="xml"  value="application/xml"/>
+                <entry key="yoga" value="text/html" />
+            </map>
+        </property>
+        <property name="defaultViews">
+            <list>
+                <bean class="org.skyscreamer.yoga.springmvc.view.YogaSpringView" p:yogaView-ref="json.view"/>
+                <bean class="org.skyscreamer.yoga.springmvc.view.YogaSpringView" p:yogaView-ref="xml.view"/>
+                <bean class="org.skyscreamer.yoga.springmvc.view.YogaSpringView" p:yogaView-ref="builder.view"/>
+            </list>
+        </property>
+    </bean>
+
+</beans>
