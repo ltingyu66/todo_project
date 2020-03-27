@@ -14,7 +14,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.skyscreamer.jsonassert.Customization;
 import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.skyscreamer.jsonassert.comparator.CustomComparator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -124,11 +127,15 @@ public class TodoItemRestApiTest {
         assertEquals(HttpStatus.OK.value(),response.getStatus());
         String expected = "{\"id\":0,\"createTime\":\"0000\",\"modifiedTime\":\"0000\",\"title\":\"test2\",\"content\":\"test\",\"statuses\":[{\"id\":1,\"title\":\"create\"}]}";
         logger.info(result.getResponse().getContentAsString());
-        JSONAssert.assertEquals(expected,result.getResponse().getContentAsString(),false);
+        JSONAssert.assertEquals(expected,result.getResponse().getContentAsString(), new CustomComparator(JSONCompareMode.LENIENT,
+                new Customization("createTime", (o1, o2) -> true),
+                new Customization("modifiedTime", (o1, o2) -> true)
+        ));
     }
 
     @Test
     public void updateTodoItem() throws Exception {
+        Mockito.when(todoItemService.getTodoItem(todoItem2.getId())).thenReturn(todoItem2);
         String JSON = "{\"id\":2,\"createTime\":\"0000\",\"modifiedTime\":\"0000\",\"title\":\"test2\",\"content\":\"test\",\"statuses\":[{\"id\":1,\"title\":\"create\"}]}";
         RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/api/todoitems")
                 .accept(MediaType.APPLICATION_JSON).content(JSON)
@@ -136,9 +143,12 @@ public class TodoItemRestApiTest {
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
         assertEquals(HttpStatus.OK.value(),response.getStatus());
-        String expected = "{\"id\":2,\"createTime\":\"0000\",\"modifiedTime\":\"0000\",\"title\":\"test2\",\"content\":\"test\",\"statuses\":[{\"id\":1,\"title\":\"create\"}]}";
+        String expected = "{\"id\":2,\"createTime\":\"0000\",\"modifiedTime\":\"0000\",\"title\":\"test2\",\"content\":\"test\",\"statuses\":[{\"id\":1,\"title\":\"create\"},{\"id\":1,\"title\":\"create\"}]}";
         logger.info(result.getResponse().getContentAsString());
-        JSONAssert.assertEquals(expected,result.getResponse().getContentAsString(),false);
+        JSONAssert.assertEquals(expected,result.getResponse().getContentAsString(), new CustomComparator(JSONCompareMode.LENIENT,
+                new Customization("createTime", (o1, o2) -> true),
+                new Customization("modifiedTime", (o1, o2) -> true)
+        ));
     }
 
     @Test

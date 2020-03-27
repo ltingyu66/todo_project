@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertNull;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {TodoAppConfig.class})
@@ -42,7 +44,6 @@ public class TodoItemDaoTest {
         todoItem.setModifiedTime("0000");
         todoItem.setContent("test");
         todoItem.setTitle("test1");
-//        todoItem.setId(1);
         todoItem2.setId(2);
         todoItem2.setCreateTime("0000");
         todoItem2.setModifiedTime("0000");
@@ -77,8 +78,8 @@ public class TodoItemDaoTest {
     @Test
     public void deleteTodoItem() {
 
-        todoItemDao.saveTodoItem(todoItem);
-        List<TodoItem> tempTodoItems = todoItemDao.getTodoItems();
-        Assert.assertEquals(todoItem.getTitle(), tempTodoItems.get(tempTodoItems.size()-1).getTitle());
+        todoItemDao.saveTodoItem(todoItem2);
+        todoItemDao.deleteTodoItem(todoItem2.getId());
+        assertNull(todoItemDao.getTodoItem(todoItem2.getId()));
     }
 }
