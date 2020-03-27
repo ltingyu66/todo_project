@@ -4,9 +4,9 @@ This project helps someone get familiar with those technologies.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local
-machine for development and testing purposes. See deployment for notes on how 
-to deploy the project on a live system.
+1.Using "create-db.sql" in folder "scripts" create database
+2.Using pom.xml to build the project
+3.Update jdbc.url(in persistence-mysql.properties) for your databse url in order to connect to database
 
 ### Prerequisites
 
